@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.unis.gmweb.mapper.TreeMapper">
+
+	<select id="findHtTree" resultMap="treeMP">
+		SELECT q_id,q_name FROM
+		xj_qy_big WHERE z_id=(SELECT z_id FROM xj_zl_big WHERE
+		z_name=#{lineName}) AND q_name LIKE '%火'
+	</select>
+	<resultMap type="Tree" id="treeMP" autoMapping="true">
+		<result property="qid" column="q_id" />
+		<result property="qname" column="q_name" />
+	</resultMap>
+</mapper>

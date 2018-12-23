@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.unis.gmweb.mapper.AlarmMapper">
+
+	<select id="findhisAlarm" resultMap="alarmMP">
+		SELECT thetime,description,s_position FROM
+		(SELECT objid,objtype,thetime ,description FROM hisalarm 
+		WHERE thetime>#{daystr} AND objtype IN('soe','analog')) his
+		INNER JOIN
+		(SELECT s_id,S_position FROM xj_sb_big) sb
+		ON
+		his.objid=sb.s_id
+	</select>
+	<resultMap type="XjAlarm" id="alarmMP" autoMapping="true">
+		<result property="saveTime" column="thetime" />
+		<result property="description" column="description" />
+		<result property="name" column="s_position" />
+	</resultMap>
+</mapper>
