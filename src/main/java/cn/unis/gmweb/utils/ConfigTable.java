@@ -15,6 +15,7 @@ public enum ConfigTable {
 	public String getValue() {
 		return value;
 	}
+
 	@Override
 	public String toString() {//重新toString方法
 		return String.valueOf(this.value);
