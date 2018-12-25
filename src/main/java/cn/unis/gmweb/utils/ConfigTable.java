@@ -6,7 +6,7 @@ public enum ConfigTable {
 	qdl_ymTable("xj_qdl_ymdata"),
 	ht_ycTable("xj_ht_data"),
 	alarmTable("xj_alarm_data"),
-	bkcTable("bkc_data_rt"),
+	bkcTable("bkc_data"),
 	diagnosisTable("bkc_diagnosis_data");//声明枚举常量，并通过构造函数复制
 	private String value;//属性及构造函数必须为private
 	private ConfigTable(String value) {
