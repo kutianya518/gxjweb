@@ -22,7 +22,7 @@
 	<!-- 注解方式:开启定 时器 -->
 	<!-- <task:annotation-driven /> --> 
 	<!-- 配置文件方式： -->
-	<task:scheduled-tasks>
-		<task:scheduled ref="alarmTask" method="sendMassage" cron="0 * * * * ?"/>
-	</task:scheduled-tasks> 
+	<!--<task:scheduled-tasks>-->
+		<!--<task:scheduled ref="alarmTask" method="sendMassage" cron="0 * * * * ?"/>-->
+	<!--</task:scheduled-tasks> -->
 </beans>

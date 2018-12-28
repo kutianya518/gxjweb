@@ -14,6 +14,12 @@ public class myTest {
 
 
 	@Test
+	public void testDouble(){
+		Double dou = 3000.533;
+		dou = (double)Math.round(dou*100)/100;
+		System.err.println(dou);
+	}
+	@Test
 	public void testJson(){
 		String json = "{\\\"repair\\\":{\\\"score\\\":100.0,\\\"num\\\":0.0},\\\"traj\\\":{\\\"score\\\":56.0,\\\"num\\\":8090.0},\\\"recordtime\\\":1544025540753,\\\"abnormal\\\":{\\\"score\\\":100.0,\\\"num\\\":0.0},\\\"alarm\\\":{\\\"score\\\":100.0,\\\"num\\\":0.0},\\\"mac\\\":\\\"e47d5a1cd5b0\\\",\\\"traffic\\\":{\\\"score\\\":88.0,\\\"num\\\":2317.0}}";
 		System.err.println(json);

@@ -61,7 +61,7 @@ public class WebSocket {
 	 *
 	 * @param message
 	 *            客户端发送过来的消息
-	 * @param session
+	 * @param mySession
 	 *            可选的参数
 	 * @throws Exception
 	 */

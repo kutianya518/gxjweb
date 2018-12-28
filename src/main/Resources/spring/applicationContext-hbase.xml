@@ -28,7 +28,7 @@
         zookeeper.znode.parent=/hbase-unsecure
     </hdp:hbase-configuration>
     <bean id="hbaseTemplate"
-          class="org.springframework.data.hadoop.hbase.HbaseTemplate">
+          class="org.springframework.data.hadoop.hbase.HbaseTemplate ">
         <property name="configuration" ref="hbaseConfiguration"></property>
         <property name="encoding" value="UTF-8"></property>
     </bean>

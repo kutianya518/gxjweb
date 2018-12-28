@@ -27,7 +27,6 @@ import cn.unis.gmweb.utils.ConfigTable;
 public class BkcController {
     @Resource
     private HbaseService hbaseService;
-
     /**
      * 获取设备详情
      *
@@ -36,36 +35,13 @@ public class BkcController {
      */
     @RequestMapping("/details/{sbid}")
     @ResponseBody
-    public HashMap<String, String> GetDeviceDetails(@PathVariable String sbid) {
-        HashMap<String, String> detailMap = hbaseService.getDeviceDetails(ConfigTable.bkcTable.toString(), sbid);
-        return detailMap;
-    }/**
-     * 获取设备详情
-     *
-     * @param sbid 设备id
-     * @return
-     */
-    @RequestMapping("/details2/{sbid}")
-    @ResponseBody
     public HashMap<String, String> GetDeviceDetailsToBIM(@PathVariable String sbid) {
         HashMap<String, String> detailMap = hbaseService.getDeviceDetails(ConfigTable.bkcTable.toString(), sbid);
         String healthState =detailMap.get("HealthState");
-        switch (healthState){
-            case "A":
-                detailMap.put("HealthState", "red");
-                break;
-            case "B":
-                detailMap.put("HealthState", "orange");
-                break;
-            case "C":
-                detailMap.put("HealthState", "yellow");
-                break;
-            case "D":
-                detailMap.put("HealthState", "blue");
-                break;
-            default:
-                detailMap.put("HealthState", "normal");
-                break;
+        if (healthState==null){
+            return detailMap;
+        }else {//二期增加预警级别
+            detailMap.put("warnLevel","yellow");
         }
         return detailMap;
     }
@@ -139,7 +115,6 @@ public class BkcController {
         List<HashMap<String, String>> speedList = hbaseService.getSpeedVibration("bkc_data_rt", sbid, minutes);
         return speedList;
     }
-
     /**
      * 诊断信息 前端hours小时调用一次
      *
@@ -148,22 +123,8 @@ public class BkcController {
      */
     @ResponseBody
     @RequestMapping("/diagnosis/{sbid}")
-    public List<HashMap<String, String>> GetDiagnosis(@PathVariable String sbid) {
-        long hours = 24 * 100;//此处为n小时诊断一次
-        List<HashMap<String, String>> diagnosisList = hbaseService.getDiagnosis(ConfigTable.diagnosisTable.toString(), sbid, hours);
-        return diagnosisList;
-    }
-
-    /**
-     * 诊断信息 前端hours小时调用一次
-     *
-     * @param sbid 设备id
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping("/diagnosis2/{sbid}")
     public List<HashMap<String, String>> GetDiagnosisToBIM(@PathVariable String sbid) {
-        long hours = 24 * 100;//此处为n小时诊断一次
+        long hours = 24 * 200;//此处为n小时诊断一次
         List<HashMap<String, String>> diagnosisList = hbaseService.getDiagnosis(ConfigTable.diagnosisTable.toString(), sbid, hours);
         for (HashMap<String, String> map : diagnosisList) {
             int serverity =Integer.valueOf(map.get("Severity"));
@@ -171,7 +132,7 @@ public class BkcController {
             if(serverity>600){
                 healthState="red";
             }else if (serverity>300 && serverity<=600){
-                healthState="orage";
+                healthState="orange";
             }else if(serverity>100 && serverity<=300){
                 healthState="yellow";
             }else if (serverity>0 && serverity<=100){
@@ -179,7 +140,8 @@ public class BkcController {
             }else {
                 //normal
             }
-            map.put("Severity",healthState);
+            //二期增加预警级别
+            map.put("warnLevel",healthState);
         }
         return diagnosisList;
     }

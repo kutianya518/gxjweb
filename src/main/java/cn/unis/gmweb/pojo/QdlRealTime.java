@@ -12,6 +12,16 @@ public class QdlRealTime {
 	private String Q;
 	private String qyName;
 	private String date;
+	private String warnLevel;
+
+	public String getWarnLevel() {
+		return warnLevel;
+	}
+
+	public void setWarnLevel(String warnLevel) {
+		this.warnLevel = warnLevel;
+	}
+
 	public String getQyName() {
 		return qyName;
 	}

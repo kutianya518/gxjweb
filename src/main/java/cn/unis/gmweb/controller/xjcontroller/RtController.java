@@ -50,7 +50,11 @@ public class RtController {
 			HtRealTime ht = new HtRealTime();
 			ht.setQyName(tree.getQname());
 			Result htRsult = hbaseService.getHtRealTime(ConfigTable.ht_ycTable.toString(), tree.getQid());
-			if(htRsult!=null) HbaseUtil.setHtReal(htRsult, ht);
+			if(htRsult!=null) {
+				HbaseUtil.setHtReal(htRsult, ht);
+				//二期增加预警级别
+				ht.setWarnLevel("normal");
+			}
 			htRealTimeList.add(ht);
 		}
 		return htRealTimeList;
@@ -70,7 +74,11 @@ public class RtController {
 			QdlRealTime qdl = new QdlRealTime();
 			qdl.setQyName(tree.getQname());
 			Result qdlRsult = hbaseService.getQdlRealTime(ConfigTable.qdl_ycTable.toString(), tree.getQid());
-			if(qdlRsult!=null) HbaseUtil.setQdlReal(qdl, qdlRsult);
+			if(qdlRsult!=null) {
+				HbaseUtil.setQdlReal(qdl, qdlRsult);
+				//二期增加预警级别
+				qdl.setWarnLevel("normal");
+			}
 			qdlRealTimeList.add(qdl);
 		}
 		return qdlRealTimeList;

@@ -6,6 +6,16 @@ public class HtRealTime {
 	private String Tvalue;
 	private String QyName;
 	private String date;
+	private String warnLevel;
+
+	public String getWarnLevel() {
+		return warnLevel;
+	}
+
+	public void setWarnLevel(String warnLevel) {
+		this.warnLevel = warnLevel;
+	}
+
 	public String getIvalue() {
 		return Ivalue;
 	}

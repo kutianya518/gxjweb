@@ -29,10 +29,10 @@ public class AlarmTask {
 	public void sendMassage() {
 		
 		if (webSocketSets.size() != 0) {
-			List<Result> alarmResult = hbaseService.getAlarmRealTime(ConfigTable.alarmTable.toString());
-			List<XjRtAlarm> alarmList = HbaseUtil.getRtAlarmList(alarmResult);
+			//List<Result> alarmResult = hbaseService.getAlarmRealTime(ConfigTable.alarmTable.toString());
+			//List<XjRtAlarm> alarmList = HbaseUtil.getRtAlarmList(alarmResult);
 			// 测试数据
-			//List<XjRtAlarm> alarmList=new ArrayList<XjRtAlarm>();
+			List<XjRtAlarm> alarmList=new ArrayList<XjRtAlarm>();
 			XjRtAlarm arm = new XjRtAlarm();
 			arm.setDescription("漏电流告警");//蓝黄橙红
 			arm.setName("东B1配电室");
