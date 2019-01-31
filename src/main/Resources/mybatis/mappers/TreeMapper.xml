@@ -13,4 +13,27 @@
 		<result property="qid" column="q_id" />
 		<result property="qname" column="q_name" />
 	</resultMap>
+	<select id="findHtRealTimeTree" resultMap="realTimeTreeMP">
+		SELECT q_id,q_name,parent_id FROM
+		xj_qy_big WHERE z_id=(SELECT z_id FROM xj_zl_big WHERE
+		z_name=#{lineName}) AND q_name LIKE '%火'
+	</select>
+	<resultMap type="HtRealTimeTree" id="realTimeTreeMP" autoMapping="true">
+		<result property="qyid" column="q_id" />
+		<result property="qyName" column="q_name" />
+		<result property="parentId" column="parent_id"/>
+	</resultMap>
+
+	<select id="findQdlRealTimeTree" resultMap="qdlRealTimeTreeMP">
+		SELECT q_id,q_name,parent_id FROM
+		xj_qy_big WHERE z_id=(SELECT z_id FROM xj_zl_big WHERE
+		z_name=#{lineName}) AND q_name LIKE '%全'
+	</select>
+	<resultMap type="QdlRealTimeTree" id="qdlRealTimeTreeMP" autoMapping="true">
+		<result property="qyid" column="q_id" />
+		<result property="qyName" column="q_name" />
+		<result property="parentId" column="parent_id"/>
+	</resultMap>
+
+
 </mapper>

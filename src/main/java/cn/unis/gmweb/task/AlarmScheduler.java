@@ -28,7 +28,7 @@ public class AlarmScheduler {
     @Autowired
     private HbaseService hbaseService;
 
-    @Scheduled(cron = "0 * * * * ?")//每分钟执行一次
+    //@Scheduled(cron = "0 * * * * ?")//每分钟执行一次
     public void sendMassage() {
         List<Result> alarmResult = hbaseService.getAlarmRealTime(ConfigTable.alarmTable.toString());
         List<XjRtAlarm> alarmList = HbaseUtil.getRtAlarmList(alarmResult);

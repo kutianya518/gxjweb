@@ -54,6 +54,7 @@ public class JxCrontroller {
     @ResponseBody
     public HashMap<String, List<Object>> getHealthScore(@PathVariable String sbid) {
         String interface_Id = jxService.getInterfaceId(sbid, "healthScore");
+
         final Integer minutes = 24 * 60;
         HashMap<String, List<Object>> stateMap = hbaseService.getElevatorData(ConfigTable.jxinterfacedata.toString(), interface_Id, minutes);
         return stateMap;
@@ -94,7 +95,7 @@ public class JxCrontroller {
     }
 
     /**
-     * 电梯运行层数数据每5分钟更新一次  查6小时返回数组
+     * 电梯运行层数(负载)数据每5分钟更新一次  查6小时返回数组
      *
      * @param sbid
      * @return
@@ -124,7 +125,7 @@ public class JxCrontroller {
     }
 
     /**
-     * 电梯加速度数据每30s更新一次 查10分钟的数据返回数组
+     * 电梯加速度数据每30s更新一次 查1小时的数据返回数组
      *
      * @param sbid
      * @return
@@ -133,13 +134,13 @@ public class JxCrontroller {
     @ResponseBody
     public HashMap<String, List<Object>> getAcc(@PathVariable String sbid) {
         String interface_Id = jxService.getInterfaceId(sbid, "acc");
-        final Integer minutes = 10;
+        final Integer minutes = 60*1;
         HashMap<String, List<Object>> stateMap = hbaseService.getElevatorData(ConfigTable.jxinterfacedata.toString(), interface_Id, minutes);
         return stateMap;
     }
 
     /**
-     * 电梯运行速度数据每30s更新一次  查10分钟的数据返回数组
+     * 电梯运行速度数据每30s更新一次  查1小时的数据返回数组
      *
      * @param sbid
      * @return
@@ -148,13 +149,13 @@ public class JxCrontroller {
     @ResponseBody
     public HashMap<String, List<Object>> getSpeed(@PathVariable String sbid) {
         String interface_Id = jxService.getInterfaceId(sbid, "speed");
-        final Integer minutes = 10;
+        final Integer minutes = 60*1;
         HashMap<String, List<Object>> stateMap = hbaseService.getElevatorData(ConfigTable.jxinterfacedata.toString(), interface_Id, minutes);
         return stateMap;
     }
 
     /**
-     * 电梯运行角速度数据每30s更新一次
+     * 电梯运行角速度数据每30s更新一次 查10分钟的数据返回数组
      *
      * @param sbid
      * @return

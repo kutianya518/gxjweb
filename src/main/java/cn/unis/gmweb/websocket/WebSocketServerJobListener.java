@@ -13,11 +13,11 @@ import org.quartz.SchedulerException;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
+
 public class WebSocketServerJobListener implements ServletContextListener {
 
 	@Override
 	public void contextDestroyed(ServletContextEvent arg0) {
-		
 	}
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {

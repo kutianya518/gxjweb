@@ -1,11 +1,13 @@
 package cn.unis.gmweb.service;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import cn.unis.gmweb.pojo.PumpDetails;
 import org.apache.hadoop.hbase.client.Get;
 import org.apache.hadoop.hbase.client.HTableInterface;
 import org.apache.hadoop.hbase.client.Result;
@@ -93,7 +95,7 @@ public class HbaseServiceImpl implements HbaseService {
      * 获取火探实时数据
      */
     @Override
-    public Result getHtRealTime(String tableName, final String qyid) {
+    public Result  getHtRealTime(String tableName, final String qyid) {
         return hbaseTemplate.execute(tableName, new TableCallback<Result>() {
             @Override
             public Result doInTable(HTableInterface table) throws Throwable {
@@ -101,7 +103,7 @@ public class HbaseServiceImpl implements HbaseService {
                 // 系统当前分钟时间戳
                 long nowminute = DateUtil.getMinuteStamp(minuteStr);
                 //当查询时是0分---1分，此时数据正在入库，入库时间4s，故整分的0-4s内查不到数据
-                long lasttime = nowminute - 60000L;
+                long lasttime = nowminute - 70000L;
                 String endrow = qyid + lasttime;
                 String startrow = qyid + nowminute;
                 Scan sc = new Scan();
@@ -128,7 +130,7 @@ public class HbaseServiceImpl implements HbaseService {
                 String minuteStr = DateUtil.getMinuteDate(System.currentTimeMillis());
                 // 系统当前分钟时间戳
                 long nowminute = DateUtil.getMinuteStamp(minuteStr);
-                long lasttime = nowminute - 60000L;
+                long lasttime = nowminute - 70000L;
                 String endrow = qyid + lasttime;
                 String startrow = qyid + nowminute;
                 Scan sc = new Scan();
@@ -263,10 +265,15 @@ public class HbaseServiceImpl implements HbaseService {
                 Scan scan = new Scan();
                 long tm = System.currentTimeMillis();
                 long nowTime = DateUtil.getMinuteStamp(DateUtil.getMinuteDate(tm));
-                long oneminute = nowTime - 60 * 1000L;
+                long oneminute = nowTime - 90 * 1000L;
                 scan.setStartRow(Bytes.toBytes(sbid + nowTime));
                 scan.setStopRow(Bytes.toBytes(sbid + oneminute));
                 scan.setReversed(true);
+                //指定返回得参数值
+                Field[] fields = PumpDetails.class.getDeclaredFields();
+                for (Field field:fields){
+                    scan.addColumn(Bytes.toBytes("unis_cf"),Bytes.toBytes(field.getName()));
+                }
                 ResultScanner scanner = table.getScanner(scan);
                 Result nextRs = scanner.next();
                 if (nextRs != null) HbaseUtil.setBkcDeviceDetailsHashMap(nextRs, map);
@@ -290,6 +297,11 @@ public class HbaseServiceImpl implements HbaseService {
                 long twenty = nowTime - minutes * 60 * 1000;
                 scan.setStartRow(Bytes.toBytes(sbid + twenty));
                 scan.setStopRow(Bytes.toBytes(sbid + nowTime));
+                scan.addColumn(Bytes.toBytes("unis_cf"),Bytes.toBytes("DJ_shock"));
+                scan.addColumn(Bytes.toBytes("unis_cf"),Bytes.toBytes("SB_shock"));
+                scan.addColumn(Bytes.toBytes("unis_cf"),Bytes.toBytes("speed"));
+                scan.addColumn(Bytes.toBytes("unis_cf"),Bytes.toBytes("temperature"));
+                scan.addColumn(Bytes.toBytes("unis_cf"),Bytes.toBytes("DataTime"));
                 ResultScanner scanner = table.getScanner(scan);
                 for (Result rs : scanner) {
                     HashMap<String, String> map = new HashMap<>();
@@ -446,6 +458,8 @@ public class HbaseServiceImpl implements HbaseService {
             public HashMap<String, List<Object>> doInTable(HTableInterface table) throws Throwable {
                 Scan scan = new Scan();
                 long nowTime = System.currentTimeMillis();
+                //long nowTime = 1544284800000L;
+                //返回12月8日数据 nowTime=1544486400000
                 long lastminute = nowTime - minutes * 60 * 1000L;
                 scan.setStartRow(Bytes.toBytes(interface_Id + lastminute));
                 scan.setStopRow(Bytes.toBytes(interface_Id + nowTime));

@@ -1,8 +1,10 @@
 package cn.unis.gmweb.utils;
 
+import cn.unis.gmweb.pojo.QdlRealTimeTree;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.junit.Test;
 
+import java.lang.reflect.Field;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -12,7 +14,10 @@ import java.util.HashMap;
 
 public class myTest {
 
-
+	@Test
+	public void testInteger(){
+		QdlRealTimeTree qdl= new QdlRealTimeTree();
+	}
 	@Test
 	public void testDouble(){
 		Double dou = 3000.533;
@@ -33,6 +38,7 @@ public class myTest {
 		System.out.println(dt);
 		String dt2=dateFormat.format(new Date(1544112253610L));
 		System.out.println(dt2);
+		System.err.println(System.currentTimeMillis());
 
 
 

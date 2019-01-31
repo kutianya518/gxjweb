@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import cn.unis.gmweb.pojo.*;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang.StringEscapeUtils;
@@ -12,13 +13,6 @@ import org.apache.hadoop.hbase.CellUtil;
 import org.apache.hadoop.hbase.KeyValue;
 import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.util.Bytes;
-import cn.unis.gmweb.pojo.HtRealTime;
-import cn.unis.gmweb.pojo.HtTrend;
-import cn.unis.gmweb.pojo.QdlRealTime;
-import cn.unis.gmweb.pojo.QdlTrend;
-import cn.unis.gmweb.pojo.QdlymTrend;
-import cn.unis.gmweb.pojo.XjAlarm;
-import cn.unis.gmweb.pojo.XjRtAlarm;
 
 import static org.apache.commons.lang.StringEscapeUtils.unescapeJavaScript;
 
@@ -108,9 +102,36 @@ public class HbaseUtil {
             }
         }
     }
+    public static void setHtRealTree(Result htRsult, HtRealTimeTree ht) {
+        // 对返回的结果集进行操作
+        for (Cell cell:htRsult.rawCells()){
+            String qualifier = Bytes.toString(CellUtil.cloneQualifier(cell));
+            String value = Bytes.toString(CellUtil.cloneValue(cell));
+            switch (qualifier) {
+                case "I":
+                    ht.setI(value);
+                    break;
+                case "T":
+                    ht.setT(value);
+                    break;
+                case "warnLevel":
+                    ht.setWarnLevel(value);
+                    break;
+                case "SaveTime":
+                    ht.setTime(value);
+                    break;
+                case "warnArguments":
+                    ht.setWarnArguments(value);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
+    }
 
     public static void setQdlReal(QdlRealTime qdl, Result qdlResult) {
-
         for (Cell cell : qdlResult.rawCells()) {
             String qualifier = Bytes.toString(CellUtil.cloneQualifier(cell));
             String value = Bytes.toString(CellUtil.cloneValue(cell));
@@ -147,6 +168,46 @@ public class HbaseUtil {
             }
         }
     }
+
+    public static void setQdlRealTree(QdlRealTimeTree qdl, Result qdlResult) {
+        for (Cell cell : qdlResult.rawCells()) {
+            String qualifier = Bytes.toString(CellUtil.cloneQualifier(cell));
+            String value = Bytes.toString(CellUtil.cloneValue(cell));
+            switch (qualifier) {
+                case "Ia":
+                    qdl.setIa(value);
+                    break;
+                case "Ib":
+                    qdl.setIb(value);
+                    break;
+                case "Ic":
+                    qdl.setIc(value);
+                    break;
+                case "Ua":
+                    qdl.setUa(value);
+                    break;
+                case "Ub":
+                    qdl.setUb(value);
+                    break;
+                case "Uc":
+                    qdl.setUc(value);
+                    break;
+                case "P":
+                    qdl.setP(value);
+                    break;
+                case "Q":
+                    qdl.setQ(value);
+                    break;
+                case "SaveTime":
+                    qdl.setTime(value);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+
 
     public static List<XjAlarm> getAlarmList(List<Result> alarmResult) {
         List<XjAlarm> alarmList = new ArrayList<XjAlarm>();
@@ -210,9 +271,7 @@ public class HbaseUtil {
         for (Cell cell : nextRs.rawCells()) {
             String qualifier = Bytes.toString(CellUtil.cloneQualifier(cell));
             String value = Bytes.toString(CellUtil.cloneValue(cell));
-            if (!"In_sum_flow".equals(qualifier) || !"out_sum_flow".equals(qualifier)) {
-                map.put(qualifier, value);
-            }
+            map.put(qualifier, value);
         }
     }
 

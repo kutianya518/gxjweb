@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import cn.unis.gmweb.pojo.HtRealTimeTree;
+import cn.unis.gmweb.pojo.QdlRealTimeTree;
 import org.springframework.stereotype.Service;
 
 import cn.unis.gmweb.mapper.TreeMapper;
@@ -20,6 +22,31 @@ public class TreeServiceImpl implements TreeService {
 	@Override
 	public List<Tree> findqdlTree(String lineName) {
 		return treeMapper.findqdlTree(lineName);
+	}
+
+    @Override
+    public List<HtRealTimeTree> findHtRealTimeTree(String lineName) {
+        return treeMapper.findHtRealTimeTree(lineName);
+    }
+
+	@Override
+	public List<QdlRealTimeTree> findQdlRealTimeTree(String lineName) {
+		return treeMapper.findQdlRealTimeTree(lineName);
+	}
+
+	@Override
+	public List<String> findAllPump() {
+		return treeMapper.findAllPump();
+	}
+
+	@Override
+	public List<String> findAllLine() {
+		return treeMapper.findAllLine();
+	}
+
+	@Override
+	public List<String> findAllQdlLine() {
+		return treeMapper.findAllQdlLine();
 	}
 
 }
