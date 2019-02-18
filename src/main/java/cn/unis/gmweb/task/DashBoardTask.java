@@ -5,7 +5,6 @@ import cn.unis.gmweb.service.HbaseService;
 import cn.unis.gmweb.service.TreeService;
 import cn.unis.gmweb.utils.ConfigTable;
 import cn.unis.gmweb.utils.HbaseUtil;
-import cn.unis.gmweb.utils.TreeToolUtils;
 import org.apache.hadoop.hbase.client.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
